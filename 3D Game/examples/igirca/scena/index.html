@@ -1,0 +1,137 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>glTF</title>
+
+    <link rel="stylesheet" href="../../../common/style.css">
+    <link rel="stylesheet" href="./main.css">
+
+    <script src="../../../lib/gl-matrix-min.js"></script>
+    <script type="module" src="main.js"></script>
+</head>
+
+<body>
+    <div class="fullscreen no-touch">
+        <canvas class="pixelated"></canvas>
+    </div>
+
+    <!-- Start menu -->
+    <div class="fullscreen overlay menu-container">
+        <div class="buttons-container">
+            <audio id="bgMusic" src="/music/main-music.mp3" loop></audio>
+            <audio id="driveMusic" src="/music/drive-w.mp3" loop></audio>
+            <audio id="driveBackMusic" src="/music/drive-s.mp3" loop></audio>
+            <h1>Fast Parking</h1>
+            <h4>Made by:<br>Anastasija Djajkovska & Bojan Spasovski</h4>
+            <h4>Controls:<br>
+                W - move forward<br>
+                A - turn left<br>
+                S - move backward<br>
+                D - turn right<br>
+                P - pause the game<br>
+                M - mute the music<br>
+                Mouse - move the camera</h4>
+            <h4>Goal of the game:<br>Collect every coin and park the car in the shortest time possible</h4>
+            <label for="nameInput">Enter Name:</label>
+            <input type="text" id="nameInput" class="input-field" placeholder="Your Name">
+            <button id="startButton">Start</button>
+            <button id="exitButton">Exit</button>
+        </div>
+    </div>
+
+    <div class="fullscreen overlay loader-container" style="display: none;">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Pause menu -->
+    <div class="fullscreen overlay pause-menu" style="display: none;">
+        <div class="pause-buttons-container">
+            <h1>Fast Parking</h1>
+            <h4 id="playerNamePaused">Player:</h4>
+            <h4>Controls:<br>
+                W - move forward<br>
+                A - turn left<br>
+                S - move backward<br>
+                D - turn right<br>
+                P - resume the game<br>
+                M - mute the music<br>
+                Mouse - move the camera</h4>
+            <button id="resumeButton">Resume</button>
+            <button id="exitPausedButton">Exit</button>
+        </div>
+    </div>
+</body>
+<script>
+    var bgMusic = document.getElementById('bgMusic');
+    bgMusic.volume = 0.1;
+
+    var driveMusic = document.getElementById('driveMusic');
+    var delayTimeout;
+
+    var driveBackMusic = document.getElementById('driveBackMusic');
+    var delayTimeout2;
+
+    // Start music
+    document.getElementById('startButton').addEventListener('click', function () {
+        bgMusic.play();
+    });
+
+    // Pause and mute
+    document.addEventListener('keydown', function (event) {
+
+        // 'p' to pause/unpause
+        if (event.key === 'p' || event.key === 'P') {
+            if (bgMusic.paused) {
+                bgMusic.play();
+            } else {
+                bgMusic.pause();
+            }
+        }
+
+        // 'm' to mute/unmute
+        if (event.key === 'm' || event.key === 'M') {
+            bgMusic.muted = !bgMusic.muted;
+        }
+
+        // 'w' music for driving
+        if (event.key === 'w' || event.key === 'W') {
+            driveMusic.volume = 1;
+            driveMusic.play();
+        }
+
+        // 's' music for reverse
+        if (event.key === 's' || event.key === 'S') {
+            driveBackMusic.volume = 1;
+            driveBackMusic.play();
+        }
+    });
+
+    document.addEventListener('keyup', function (event) {
+        // 'w' to stop music for driving
+        if (event.key === 'w' || event.key === 'W') {
+            driveMusic.volume = 0.3;
+            clearTimeout(delayTimeout);
+            delayTimeout = setTimeout(function () {
+                driveMusic.pause();
+                driveMusic.currentTime = 0;
+            }, 1000);
+        }
+
+        // 's' to stop music for reverse
+        if (event.key === 's' || event.key === 'S') {
+            driveBackMusic.volume = 0.3;
+            clearTimeout(delayTimeout);
+            delayTimeout = setTimeout(function () {
+                driveBackMusic.pause();
+                driveBackMusic.currentTime = 0;
+            }, 1000);
+        }
+    });
+</script>
+
+</html>
