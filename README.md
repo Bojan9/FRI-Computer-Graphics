@@ -27,7 +27,7 @@ The subject Computer graphics includes selected chapters in the field of compute
 
 ### Homework 3 (2022 & 2023)
 - [x] Quadtree
-- [x] [SFML - Quadtree Collision Detection [1 min]](https://www.youtube.com/watch?v=TJzq_kjtGTc&ab_channel=VinhTruong)
+([SFML - Quadtree Collision Detection [1 min]](https://www.youtube.com/watch?v=TJzq_kjtGTc&ab_channel=VinhTruong))
 
 ## Seminar
 
